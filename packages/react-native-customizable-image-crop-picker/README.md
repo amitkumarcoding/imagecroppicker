@@ -229,8 +229,8 @@ This package also exports a **fully customizable React Native modal** (`ImageCro
 
 ## Examples
 
-- [Basic Example](https://github.com/amitkumarcoding/imagecroppicker/tree/main/example)
-- [Full Example](https://github.com/amitkumarcoding/imagecroppicker/tree/main/packages/react-native-customizable-image-crop-picker/example)
+- [Basic Example](https://github.com/amitkumarcoding/imagecroppicker/blob/main/App.js)
+- [Full Example](https://github.com/amitkumarcoding/imagecroppicker/blob/main/packages/react-native-customizable-image-crop-picker/example/App.js)
 
 
 ### Usage
