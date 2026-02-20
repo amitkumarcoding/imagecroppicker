@@ -1,6 +1,6 @@
 {
   "name": "react-native-customizable-image-crop-picker",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Fully customizable React Native image crop picker (JS UI + native performance).",
   "keywords": [
     "react-native",

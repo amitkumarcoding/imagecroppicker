@@ -43,52 +43,24 @@ iOS/Android image picker + cropper with support for **camera**, **gallery**, opt
 
 ## Demo
 
-**Android**
+### Android
 
-</br></br>
-<p>
-  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/1.png" alt="Android demo" width="320" />
-</p>
-</br>
-<p>
-  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/2.png" alt="Android demo" width="320" />
-</p>
-</br>
-<p>
-  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/3.png" alt="Android demo" width="320" />
-</p>
-</br>
-<p>
-  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/4.png" alt="Android demo" width="320" />
-</p>
-</br>
-</br>
+<div style="display: flex; flex-wrap: wrap; gap: 12px;">
+  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/1.png" width="260" />
+  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/2.png" width="260" />
+  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/3.png" width="260" />
+  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/4.png" width="260" />
+</div>
 
-**iOS**
+### iOS
 
-</br>
-</br>
-<p>
-  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/5.png" alt="iOS demo" width="320" />
-</p>
-</br>
-<p>
-  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/6.png" alt="iOS demo" width="320" />
-</p>
-</br>
-<p>
-  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/7.png" alt="iOS demo" width="320" />
-</p>
-</br>
-<p>
-  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/8.png" alt="iOS demo" width="320" />
-</p>
-</br>
-<p>
-  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/9.png" alt="iOS demo" width="320" />
-</p>
-</br>
-</br>
+<div style="display: flex; flex-wrap: wrap; gap: 12px;">
+  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/5.png" width="260" />
+  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/6.png" width="260" />
+  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/7.png" width="260" />
+  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/8.png" width="260" />
+  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/9.png" width="260" />
+</div>
 
 
 ## Important notes
@@ -236,29 +208,149 @@ This package also exports a **fully customizable React Native modal** (`ImageCro
 ### Usage
 
 ```js
-import React, { useState } from 'react';
-import { View, Button } from 'react-native';
-import { ImageCropPickerModal } from 'react-native-customizable-image-crop-picker';
 
-export default function Screen() {
-  const [visible, setVisible] = useState(false);
+import React from 'react';
+import {
+    View,
+    Text,
+    StyleSheet,
+    StatusBar,
+    TouchableOpacity,
+    Alert,
+    Platform,
+    PermissionsAndroid,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { openImageCropPicker } from 'react-native-customizable-image-crop-picker';
 
-  return (
-    <View style={{ flex: 1 }}>
-      <Button title="Open preview UI" onPress={() => setVisible(true)} />
+const App = () => {
+    async function ensureCameraPermission() {
+        if (Platform.OS !== 'android') return true;
+        const res = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
+        return res === PermissionsAndroid.RESULTS.GRANTED;
+    }
 
-      <ImageCropPickerModal
-        visible={visible}
-        imageUri="file:///path/to/image.jpg"
-        headerTitle="Preview Image"
-        cancelText="Cancel"
-        uploadText="Upload"
-        onCancel={() => setVisible(false)}
-        onConfirm={() => setVisible(false)}
-      />
-    </View>
-  );
-}
+    const baseConfig = {
+        cropWidth: 1,
+        cropHeight: 1,
+        circularCrop: true,
+        cropGridEnabled: true,
+        dimmedLayerColor: '#B3000000',
+        compressQuality: 0.8,
+        compressFormat: 'jpeg',
+        headerTitle: 'Preview',
+        headerAlignment: 'center',
+        controlsPlacement: 'bottom',
+        uploadText: 'Upload',
+        cancelText: 'Cancel',
+        uploadButtonContent: 'text',
+        cancelButtonContent: 'text',
+    };
+
+    const openCamera = async () => {
+        const ok = await ensureCameraPermission();
+        if (!ok) return;
+
+        try {
+            const result = await openImageCropPicker({
+                ...baseConfig,
+                source: 'camera',
+            });
+            console.log('Camera Result:', result);
+        } catch (error) {
+            handleError(error);
+        }
+    };
+
+    const openGallery = async () => {
+        try {
+            const result = await openImageCropPicker({
+                ...baseConfig,
+                source: 'gallery',
+            });
+
+            console.log('Gallery Result:', result);
+        } catch (error) {
+            handleError(error);
+        }
+    };
+
+    const handleError = (error) => {
+        if (error?.code === 'E_PERMISSION_MISSING') {
+            Alert.alert('Permission Required', 'Please allow camera access');
+            return;
+        }
+
+        if (error?.code === 'E_PICKER_CANCELLED') {
+            console.log('User cancelled');
+            return;
+        }
+
+        console.error('Unhandled Error:', error);
+    };
+
+    return (
+        <SafeAreaView style={styles.safeArea}>
+            <StatusBar barStyle="dark-content" />
+
+            <View style={styles.container}>
+                <TouchableOpacity
+                    style={styles.primaryButton}
+                    activeOpacity={0.8}
+                    onPress={openCamera}
+                >
+                    <Text style={styles.primaryText}>Open Camera</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={styles.secondaryButton}
+                    activeOpacity={0.8}
+                    onPress={openGallery}
+                >
+                    <Text style={styles.secondaryText}>Open Gallery</Text>
+                </TouchableOpacity>
+            </View>
+        </SafeAreaView>
+    );
+};
+
+export default App;
+
+const styles = StyleSheet.create({
+    safeArea: {
+        flex: 1,
+        backgroundColor: '#F9FAFB',
+    },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        paddingHorizontal: 20,
+        gap: 16,
+    },
+    primaryButton: {
+        backgroundColor: '#111827',
+        paddingVertical: 14,
+        borderRadius: 12,
+        alignItems: 'center',
+    },
+    primaryText: {
+        color: '#FFFFFF',
+        fontSize: 16,
+        fontWeight: '600',
+    },
+    secondaryButton: {
+        borderWidth: 1.5,
+        borderColor: '#111827',
+        paddingVertical: 14,
+        borderRadius: 12,
+        alignItems: 'center',
+    },
+    secondaryText: {
+        color: '#111827',
+        fontSize: 16,
+        fontWeight: '600',
+    },
+});
 ```
 
 ### Modal props
