@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="./assets/logo.png" alt="react-native-customizable-image-crop-picker" width="140" />
-</p>
-
 # react-native-customizable-image-crop-picker
 
 [![License](https://img.shields.io/npm/l/react-native-customizable-image-crop-picker)](./LICENSE)
@@ -50,13 +46,13 @@ iOS/Android image picker + cropper with support for **camera**, **gallery**, opt
 **Android**
 
 <p>
-  <img src="./assets/demo-android.png" alt="Android demo" width="320" />
+  <img src="../../images/1.png" alt="Android demo" width="320" />
 </p>
 
 **iOS**
 
 <p>
-  <img src="./assets/demo-ios.png" alt="iOS demo" width="320" />
+  <img src="../../images/1.png" alt="iOS demo" width="320" />
 </p>
 
 ## Important notes
