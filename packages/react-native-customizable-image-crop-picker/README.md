@@ -44,17 +44,48 @@ iOS/Android image picker + cropper with support for **camera**, **gallery**, opt
 ## Demo
 
 **Android**
-
+</br></br>
 <p>
   <img src="../../images/1.png" alt="Android demo" width="320" />
 </p>
-
-**iOS**
-
+</br>
 <p>
-  <img src="../../images/1.png" alt="iOS demo" width="320" />
+  <img src="../../images/2.png" alt="Android demo" width="320" />
 </p>
-
+</br>
+<p>
+  <img src="../../images/3.png" alt="Android demo" width="320" />
+</p>
+</br>
+<p>
+  <img src="../../images/4.png" alt="Android demo" width="320" />
+</p>
+</br>
+</br>
+**iOS**
+</br>
+</br>
+<p>
+  <img src="../../images/5.png" alt="iOS demo" width="320" />
+</p>
+</br>
+<p>
+  <img src="../../images/6.png" alt="iOS demo" width="320" />
+</p>
+</br>
+<p>
+  <img src="../../images/7.png" alt="iOS demo" width="320" />
+</p>
+</br>
+<p>
+  <img src="../../images/8.png" alt="iOS demo" width="320" />
+</p>
+</br>
+<p>
+  <img src="../../images/9.png" alt="iOS demo" width="320" />
+</p>
+</br>
+</br>
 ## Important notes
 
 - **Camera permission**
