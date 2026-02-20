@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "description": "Fully customizable React Native image crop picker (JS UI + native performance).",
   "license": "MIT",
-  "author": "Your Name <you@example.com>",
+  "author": "Amit Kumar",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-org/react-native-customizable-image-crop-picker.git"
+    "url": "git+https://github.com/amitkumarcoding/imagecroppicker/tree/main/packages/react-native-customizable-image-crop-picker"
   },
-  "homepage": "https://github.com/your-org/react-native-customizable-image-crop-picker#readme",
+  "homepage": "https://github.com/amitkumarcoding/imagecroppicker/blob/main/packages/react-native-customizable-image-crop-picker/README.md",
   "bugs": {
-    "url": "https://github.com/your-org/react-native-customizable-image-crop-picker/issues"
+    "url": "https://github.com/amitkumarcoding/imagecroppicker/issues"
   },
   "keywords": [
     "react-native",
