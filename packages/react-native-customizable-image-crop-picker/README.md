@@ -47,19 +47,19 @@ iOS/Android image picker + cropper with support for **camera**, **gallery**, opt
 
 </br></br>
 <p>
-  <img src="../../images/1.png" alt="Android demo" width="320" />
+  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/1.png" alt="Android demo" width="320" />
 </p>
 </br>
 <p>
-  <img src="../../images/2.png" alt="Android demo" width="320" />
+  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/2.png" alt="Android demo" width="320" />
 </p>
 </br>
 <p>
-  <img src="../../images/3.png" alt="Android demo" width="320" />
+  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/3.png" alt="Android demo" width="320" />
 </p>
 </br>
 <p>
-  <img src="../../images/4.png" alt="Android demo" width="320" />
+  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/4.png" alt="Android demo" width="320" />
 </p>
 </br>
 </br>
@@ -69,23 +69,23 @@ iOS/Android image picker + cropper with support for **camera**, **gallery**, opt
 </br>
 </br>
 <p>
-  <img src="../../images/5.png" alt="iOS demo" width="320" />
+  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/5.png" alt="iOS demo" width="320" />
 </p>
 </br>
 <p>
-  <img src="../../images/6.png" alt="iOS demo" width="320" />
+  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/6.png" alt="iOS demo" width="320" />
 </p>
 </br>
 <p>
-  <img src="../../images/7.png" alt="iOS demo" width="320" />
+  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/7.png" alt="iOS demo" width="320" />
 </p>
 </br>
 <p>
-  <img src="../../images/8.png" alt="iOS demo" width="320" />
+  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/8.png" alt="iOS demo" width="320" />
 </p>
 </br>
 <p>
-  <img src="../../images/9.png" alt="iOS demo" width="320" />
+  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/9.png" alt="iOS demo" width="320" />
 </p>
 </br>
 </br>
@@ -128,8 +128,23 @@ Add:
 
 #### If CocoaPods fails: TOCropViewController modular headers
 
+If you see this error during `pod install`:
+
+- `The following Swift pods cannot yet be integrated as static libraries...`
+- `RNCustomizableImageCropPicker depends upon TOCropViewController, which does not define modules`
+
+Add this to your **app** `ios/Podfile` (inside your app target):
+
 ```ruby
 pod 'TOCropViewController', :modular_headers => true
+```
+
+Then run:
+
+```bash
+cd ios
+pod install
+cd ..
 ```
 
 #### If you see an rsync error about missing simulator slice (RN 0.84+ prebuilt pods)
@@ -211,6 +226,12 @@ const result = await openImageCropPicker({
 ## Optional: JS UI chrome (`ImageCropPickerModal`)
 
 This package also exports a **fully customizable React Native modal** (`ImageCropPickerModal`) that you can use as your own UI layer (custom header/footer/buttons). It’s independent from the native crop flow.
+
+## Examples
+
+- [Basic Example](https://github.com/amitkumarcoding/imagecroppicker/tree/main/example)
+- [Full Example](https://github.com/amitkumarcoding/imagecroppicker/tree/main/packages/react-native-customizable-image-crop-picker/example)
+
 
 ### Usage
 
@@ -476,4 +497,3 @@ Contributions are welcome. Please open an issue with reproduction details or sub
 ## License
 
 MIT
-
