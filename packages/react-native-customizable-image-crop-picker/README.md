@@ -44,6 +44,7 @@ iOS/Android image picker + cropper with support for **camera**, **gallery**, opt
 ## Demo
 
 **Android**
+
 </br></br>
 <p>
   <img src="../../images/1.png" alt="Android demo" width="320" />
@@ -62,7 +63,9 @@ iOS/Android image picker + cropper with support for **camera**, **gallery**, opt
 </p>
 </br>
 </br>
+
 **iOS**
+
 </br>
 </br>
 <p>
@@ -86,6 +89,8 @@ iOS/Android image picker + cropper with support for **camera**, **gallery**, opt
 </p>
 </br>
 </br>
+
+
 ## Important notes
 
 - **Camera permission**
