@@ -2,16 +2,6 @@
   "name": "react-native-customizable-image-crop-picker",
   "version": "0.1.0",
   "description": "Fully customizable React Native image crop picker (JS UI + native performance).",
-  "license": "MIT",
-  "author": "Amit Kumar",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/amitkumarcoding/imagecroppicker/tree/main/packages/react-native-customizable-image-crop-picker"
-  },
-  "homepage": "https://github.com/amitkumarcoding/imagecroppicker/blob/main/packages/react-native-customizable-image-crop-picker/README.md",
-  "bugs": {
-    "url": "https://github.com/amitkumarcoding/imagecroppicker/issues"
-  },
   "keywords": [
     "react-native",
     "image",
@@ -22,12 +12,17 @@
     "gallery",
     "typescript"
   ],
-  "sideEffects": false,
-  "main": "dist/commonjs/index.js",
-  "module": "dist/module/index.js",
-  "types": "dist/types/index.d.ts",
-  "react-native": "src/index.ts",
-  "source": "src/index.ts",
+  "homepage": "https://github.com/amitkumarcoding/imagecroppicker/blob/main/packages/react-native-customizable-image-crop-picker/README.md",
+  "bugs": {
+    "url": "https://github.com/amitkumarcoding/imagecroppicker/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amitkumarcoding/imagecroppicker.git#main"
+  },
+  "license": "MIT",
+  "author": "Amit Kumar",
+  "type": "commonjs",
   "exports": {
     ".": {
       "react-native": "./src/index.ts",
@@ -35,6 +30,11 @@
       "import": "./dist/module/index.js",
       "require": "./dist/commonjs/index.js"
     }
+  },
+  "main": "dist/commonjs/index.js",
+  "types": "dist/types/index.d.ts",
+  "directories": {
+    "example": "example"
   },
   "files": [
     "android",
@@ -53,17 +53,11 @@
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
-  "peerDependencies": {
-    "react": ">=18",
-    "react-native": ">=0.72"
-  },
-  "peerDependenciesMeta": {
-    "react-native-safe-area-context": {
-      "optional": true
-    },
-    "react-native-svg": {
-      "optional": true
-    }
+  "dependencies": {
+    "balanced-match": "^4.0.3",
+    "brace-expansion": "^5.0.2",
+    "glob": "^13.0.6",
+    "minimatch": "^10.2.2"
   },
   "devDependencies": {
     "@react-native/babel-preset": "^0.84.0",
@@ -78,6 +72,22 @@
     "rimraf": "^6.0.1",
     "typescript": "^5.8.3"
   },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-native": ">=0.72"
+  },
+  "peerDependenciesMeta": {
+    "react-native-safe-area-context": {
+      "optional": true
+    },
+    "react-native-svg": {
+      "optional": true
+    }
+  },
+  "sideEffects": false,
+  "module": "dist/module/index.js",
+  "react-native": "src/index.ts",
+  "source": "src/index.ts",
   "bob": {
     "source": "src",
     "output": "dist",
