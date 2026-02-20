@@ -1,0 +1,23 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <uses-permission android:name="android.permission.CAMERA" />
+
+  <application>
+    <activity
+      android:name="com.rncustomizableimagecroppicker.NativeImageCropperActivity"
+      android:exported="false"
+      android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+    <provider
+      android:name="com.rncustomizableimagecroppicker.NativeImagePickerFileProvider"
+      android:authorities="${applicationId}.nativeimagepicker.provider"
+      android:exported="false"
+      android:grantUriPermissions="true">
+      <meta-data
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        android:resource="@xml/nativeimagepicker_file_paths" />
+    </provider>
+  </application>
+
+</manifest>
+
