@@ -6,24 +6,35 @@
 ![Platform - Android](https://img.shields.io/badge/platform-android-3DDC84?logo=android&logoColor=white)
 ![Platform - iOS](https://img.shields.io/badge/platform-iOS-000000?logo=apple&logoColor=white)
 
-This library is developed by **Amit Kumar**.
-
-A high performance, beautiful and fully customizable **image crop picker** for React Native.
-
-iOS/Android image picker + cropper with support for **camera**, **gallery**, optional **base64**, and a **highly customizable native full-screen crop UI** (header/footer/buttons/icons/layout) driven by JS props.
+A high-performance, fully customizable **image crop picker** for React Native (iOS + Android).
 
 - **Android**: system photo picker / camera + **uCrop**
 - **iOS**: `UIImagePickerController` / camera + **TOCropViewController**
 
-## Platforms Supported
+This library is developed and maintained by **Amit Kumar**.
 
-- [x] iOS
-- [x] Android
+## Table of contents
+
+- [Features](#features)
+- [Roadmap / future features](#roadmap--future-features)
+- [Demo](#demo)
+- [Installation](#installation)
+- [Permissions](#permissions)
+- [Quick start](#quick-start)
+- [Icons (including SVG on Android)](#icons-including-svg-on-android)
+- [API: `openImageCropPicker(options)`](#api-openimagecroppickeroptions)
+- [Response object](#response-object)
+- [Errors](#errors)
+- [Known limitations](#known-limitations)
+- [Peer dependencies](#peer-dependencies)
+- [Contributing](#contributing)
+- [Support](#support)
+- [License](#license)
 
 ## Features
 
 - Camera + gallery
-- Cropping with configurable aspect ratio (`cropWidth` / `cropHeight`)
+- Cropping with configurable aspect ratio (`cropWidth` / `cropHeight` or `aspectRatio`)
 - Circular crop (`circularCrop`)
 - Crop overlays: dimmed layer + grid (`dimmedLayerColor`, `cropGridEnabled`)
 - Native crop controls (rotate/reset + aspect ratio picker) via `showNativeCropControls`
@@ -33,47 +44,38 @@ iOS/Android image picker + cropper with support for **camera**, **gallery**, opt
 - Icons: remote (http/https) + local (`file://` / Android `content://`) + base64 + bundled assets (`require(...)`)
 - Events: `onCropStart`, `onCropEnd`, `onProgress` (Android base64 progress)
 
-## Roadmap (planned)
+## Roadmap / future features
 
-- **Rotation + flip parity**: add flip support, finer control over native toolbars
-- **Multiple aspect ratio presets**: configurable preset list (1:1, 4:3, 16:9, free) beyond the native defaults
-- **Full RN UI mode**: “JS chrome + native crop engine” component so every UI detail is styleable with real RN styles
-- **Richer error codes** and permission UX
-- **Multiple selection** (`multiple`, `maxFiles`)
+- **Multiple selection**: `multiple`, `maxFiles`
+- **Flip support** (to complement rotation)
+- **More aspect ratio presets** (configurable preset list)
+- **Richer errors + permission UX** (more granular error codes and clearer guidance)
 
 ## Demo
 
-### Android
+<details>
+  <summary>Android screenshots</summary>
+  <br />
+  <img src="https://raw.githubusercontent.com/amitkumarcoding/imagecroppicker/main/images/1.png" width="240" />
+  <img src="https://raw.githubusercontent.com/amitkumarcoding/imagecroppicker/main/images/2.png" width="240" />
+  <img src="https://raw.githubusercontent.com/amitkumarcoding/imagecroppicker/main/images/3.png" width="240" />
+  <img src="https://raw.githubusercontent.com/amitkumarcoding/imagecroppicker/main/images/4.png" width="240" />
+</details>
 
-<div style="display: flex; flex-wrap: wrap; gap: 12px;">
-  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/1.png" width="260" />
-  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/2.png" width="260" />
-  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/3.png" width="260" />
-  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/4.png" width="260" />
-</div>
+<details>
+  <summary>iOS screenshots</summary>
+  <br />
+  <img src="https://raw.githubusercontent.com/amitkumarcoding/imagecroppicker/main/images/5.png" width="240" />
+  <img src="https://raw.githubusercontent.com/amitkumarcoding/imagecroppicker/main/images/6.png" width="240" />
+  <img src="https://raw.githubusercontent.com/amitkumarcoding/imagecroppicker/main/images/7.png" width="240" />
+  <img src="https://raw.githubusercontent.com/amitkumarcoding/imagecroppicker/main/images/8.png" width="240" />
+  <img src="https://raw.githubusercontent.com/amitkumarcoding/imagecroppicker/main/images/9.png" width="240" />
+</details>
 
-### iOS
-
-<div style="display: flex; flex-wrap: wrap; gap: 12px;">
-  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/5.png" width="260" />
-  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/6.png" width="260" />
-  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/7.png" width="260" />
-  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/8.png" width="260" />
-  <img src="https://github.com/amitkumarcoding/imagecroppicker/blob/main/images/9.png" width="260" />
-</div>
-
-
-## Important notes
-
-- **Camera permission**
-  - **Android**: you must request `CAMERA` permission at runtime (helper included).
-  - **iOS**: you must add `NSCameraUsageDescription` to `Info.plist`.
-- **iOS Simulator**: camera isn’t available on the simulator. Test camera on a real device.
-
-## Getting started
+## Installation
 
 ```bash
-npm install react-native-customizable-image-crop-picker --save
+npm install react-native-customizable-image-crop-picker
 ```
 
 or
@@ -85,12 +87,30 @@ yarn add react-native-customizable-image-crop-picker
 ### iOS
 
 ```bash
+cd ios && pod install && cd ..
+```
+
+#### If CocoaPods fails: TOCropViewController modular headers
+
+If `pod install` fails with a Swift modular headers error (TOCropViewController), add this to your **app** `ios/Podfile` (inside your app target):
+
+```ruby
+pod 'TOCropViewController', :modular_headers => true
+```
+
+Then run `pod install` again.
+
+#### If you see an rsync error about missing simulator slice (RN 0.84+ prebuilt pods)
+
+```bash
 cd ios
-pod install
+RCT_USE_PREBUILT_RNCORE=0 pod install
 cd ..
 ```
 
-#### Permissions (Info.plist)
+## Permissions
+
+### iOS (`Info.plist`)
 
 Add:
 
@@ -98,72 +118,30 @@ Add:
 - `NSPhotoLibraryUsageDescription`
 - `NSPhotoLibraryAddUsageDescription` (only if saving to library)
 
-#### If CocoaPods fails: TOCropViewController modular headers
-
-If you see this error during `pod install`:
-
-- `The following Swift pods cannot yet be integrated as static libraries...`
-- `RNCustomizableImageCropPicker depends upon TOCropViewController, which does not define modules`
-
-Add this to your **app** `ios/Podfile` (inside your app target):
-
-```ruby
-pod 'TOCropViewController', :modular_headers => true
-```
-
-Then run:
-
-```bash
-cd ios
-pod install
-cd ..
-```
-
-#### If you see an rsync error about missing simulator slice (RN 0.84+ prebuilt pods)
-
-```bash
-cd ios
-RCT_USE_PREBUILT_RNCORE=0 pod install
-```
-
 ### Android
 
-Autolinking handles it. For camera flows, ensure this exists (manifest merge usually brings it from the library):
+- Request `CAMERA` permission at runtime before opening `source: 'camera'`.
+- Ensure the following is present (usually merged from the library):
 
 ```xml
 <uses-permission android:name="android.permission.CAMERA" />
 ```
 
-If you use **remote icons** (`http/https`) for buttons, your app must also have:
+If you use **remote icons** (`http/https`) for buttons:
 
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
 ```
 
-### SVG icons (Android native UI)
+### Notes
 
-On **Android**, button icon props like `uploadButtonIconUri` / `cancelButtonIconUri` can also be **SVG**:
+- **iOS Simulator**: camera isn’t available on the simulator. Test camera on a real device.
 
-- Remote: `https://.../icon.svg`
-- Local: `file://.../icon.svg` or `content://.../icon.svg`
-- Data URI: `data:image/svg+xml;utf8,<svg ...>`
-- Base64: `data:image/svg+xml;base64,PHN2Zy4uLg==`
-
-On **iOS native UI**, SVG icons are not supported (use PNG/JPG/WebP), or use the JS UI (`ImageCropPickerModal`) with `react-native-svg`.
-
-## Usage
-
-Import:
+## Quick start
 
 ```js
-import {
-  openImageCropPicker,
-} from 'react-native-customizable-image-crop-picker';
-```
+import { openImageCropPicker } from 'react-native-customizable-image-crop-picker';
 
-### Select from gallery
-
-```js
 const result = await openImageCropPicker({
   source: 'gallery',
   cropWidth: 1,
@@ -173,7 +151,7 @@ const result = await openImageCropPicker({
 console.log(result.path);
 ```
 
-### Select from camera
+### Camera
 
 ```js
 const result = await openImageCropPicker({
@@ -195,200 +173,28 @@ const result = await openImageCropPicker({
 });
 ```
 
-## Optional: JS UI chrome (`ImageCropPickerModal`)
-
-This package also exports a **fully customizable React Native modal** (`ImageCropPickerModal`) that you can use as your own UI layer (custom header/footer/buttons). It’s independent from the native crop flow.
-
-## Examples
+### Examples (recommended)
 
 - [Basic Example](https://github.com/amitkumarcoding/imagecroppicker/blob/main/App.js)
 - [Full Example](https://github.com/amitkumarcoding/imagecroppicker/blob/main/packages/react-native-customizable-image-crop-picker/example/App.js)
 
+## Icons (including SVG on Android)
 
-### Usage
+Button icon props like `uploadButtonIconUri` / `cancelButtonIconUri` accept:
 
-```js
+- Remote URI: `https://...`
+- Local file: `file://...`
+- Android content URI: `content://...`
+- Bundled asset: `require('./icon.png')` (recommended)
 
-import React from 'react';
-import {
-    View,
-    Text,
-    StyleSheet,
-    StatusBar,
-    TouchableOpacity,
-    Alert,
-    Platform,
-    PermissionsAndroid,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { openImageCropPicker } from 'react-native-customizable-image-crop-picker';
+### SVG
 
-const App = () => {
-    async function ensureCameraPermission() {
-        if (Platform.OS !== 'android') return true;
-        const res = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
-        return res === PermissionsAndroid.RESULTS.GRANTED;
-    }
+- **Android native UI** supports SVG for these icon URIs.
+- **iOS native UI** does **not** support SVG (use PNG/JPG/WebP).
 
-    const baseConfig = {
-        cropWidth: 1,
-        cropHeight: 1,
-        circularCrop: true,
-        cropGridEnabled: true,
-        dimmedLayerColor: '#B3000000',
-        compressQuality: 0.8,
-        compressFormat: 'jpeg',
-        headerTitle: 'Preview',
-        headerAlignment: 'center',
-        controlsPlacement: 'bottom',
-        uploadText: 'Upload',
-        cancelText: 'Cancel',
-        uploadButtonContent: 'text',
-        cancelButtonContent: 'text',
-    };
+## API: `openImageCropPicker(options)`
 
-    const openCamera = async () => {
-        const ok = await ensureCameraPermission();
-        if (!ok) return;
-
-        try {
-            const result = await openImageCropPicker({
-                ...baseConfig,
-                source: 'camera',
-            });
-            console.log('Camera Result:', result);
-        } catch (error) {
-            handleError(error);
-        }
-    };
-
-    const openGallery = async () => {
-        try {
-            const result = await openImageCropPicker({
-                ...baseConfig,
-                source: 'gallery',
-            });
-
-            console.log('Gallery Result:', result);
-        } catch (error) {
-            handleError(error);
-        }
-    };
-
-    const handleError = (error) => {
-        if (error?.code === 'E_PERMISSION_MISSING') {
-            Alert.alert('Permission Required', 'Please allow camera access');
-            return;
-        }
-
-        if (error?.code === 'E_PICKER_CANCELLED') {
-            console.log('User cancelled');
-            return;
-        }
-
-        console.error('Unhandled Error:', error);
-    };
-
-    return (
-        <SafeAreaView style={styles.safeArea}>
-            <StatusBar barStyle="dark-content" />
-
-            <View style={styles.container}>
-                <TouchableOpacity
-                    style={styles.primaryButton}
-                    activeOpacity={0.8}
-                    onPress={openCamera}
-                >
-                    <Text style={styles.primaryText}>Open Camera</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={styles.secondaryButton}
-                    activeOpacity={0.8}
-                    onPress={openGallery}
-                >
-                    <Text style={styles.secondaryText}>Open Gallery</Text>
-                </TouchableOpacity>
-            </View>
-        </SafeAreaView>
-    );
-};
-
-export default App;
-
-const styles = StyleSheet.create({
-    safeArea: {
-        flex: 1,
-        backgroundColor: '#F9FAFB',
-    },
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        paddingHorizontal: 20,
-        gap: 16,
-    },
-    primaryButton: {
-        backgroundColor: '#111827',
-        paddingVertical: 14,
-        borderRadius: 12,
-        alignItems: 'center',
-    },
-    primaryText: {
-        color: '#FFFFFF',
-        fontSize: 16,
-        fontWeight: '600',
-    },
-    secondaryButton: {
-        borderWidth: 1.5,
-        borderColor: '#111827',
-        paddingVertical: 14,
-        borderRadius: 12,
-        alignItems: 'center',
-    },
-    secondaryText: {
-        color: '#111827',
-        fontSize: 16,
-        fontWeight: '600',
-    },
-});
-```
-
-### Modal props
-
-| Prop | Type | Required | Default | Description |
-| --- | --- | --- | --- | --- |
-| visible | boolean | Yes | - | Show/hide the modal |
-| imageUri | string | No | - | Image to preview |
-| onCancel | `() => void` | Yes | - | Cancel callback |
-| onConfirm | `() => void` | Yes | - | Confirm callback |
-| safeAreaEnabled | boolean | No | `true` | Wrap modal in `SafeAreaView` |
-| backgroundColor | string | No | `#000` | Preview background |
-| showHeader | boolean | No | `true` | Show header |
-| showFooter | boolean | No | `true` | Show footer |
-| headerTitle | string | No | `Preview Image` | Header title |
-| headerAlignment | `'left' \| 'center' \| 'right'` | No | `'center'` | Title alignment |
-| leftIcon | `React.ReactNode` | No | - | Left icon element |
-| rightIcon | `React.ReactNode` | No | - | Right icon element |
-| showLeftIcon | boolean | No | `headerAlignment === 'center'` | Show/hide left icon |
-| showRightIcon | boolean | No | `headerAlignment === 'center'` | Show/hide right icon |
-| headerStyle | `{ containerStyle?, titleStyle?, leftIconContainerStyle?, rightIconContainerStyle? }` | No | - | Header styling |
-| cancelText | string | No | `Cancel` | Cancel label |
-| uploadText | string | No | `Upload` | Upload label |
-| cancelIcon | `React.ReactNode` | No | - | Cancel icon element (footer) |
-| uploadIcon | `React.ReactNode` | No | - | Upload icon element (footer) |
-| footerStyle | `{ containerStyle?, buttonRowStyle?, cancelButtonStyle?, uploadButtonStyle?, cancelTextStyle?, uploadTextStyle?, cancelIconContainerStyle?, uploadIconContainerStyle? }` | No | - | Footer styling |
-| overlayStyle | `{ containerStyle?, previewContainerStyle?, imageStyle?, cropOverlayStyle? }` | No | - | Preview + overlay styling |
-
-### Render overrides
-
-| Prop | Type | Required | Default | Description |
-| --- | --- | --- | --- | --- |
-| renderHeader | `(ctx) => React.ReactNode` | No | - | Full custom header |
-| renderFooter | `(ctx) => React.ReactNode` | No | - | Full custom footer |
-| renderCancelButton | `(ctx) => React.ReactNode` | No | - | Custom cancel button |
-| renderUploadButton | `(ctx) => React.ReactNode` | No | - | Custom upload button |
-
-## Props / Options (`openImageCropPicker(options)`)
+> Backwards compatible alias: `open(options)`
 
 Defaults shown below are the current native defaults.
 
@@ -425,6 +231,7 @@ Defaults shown below are the current native defaults.
 | --- | --- | --- | --- | --- |
 | preferNativeUI | boolean | No | `true` | Prefer native full-screen UI (current implementation uses native UI) |
 | headerTitle | string | No | `Preview Image` | Native header title |
+| headerAlignment | `'left' \| 'center' \| 'right'` | No | `'center'` | Header title alignment |
 | headerHeight | number | No | `84` | Header height |
 | headerPaddingHorizontal | number | No | `20` | Header padding |
 | headerPaddingTop | number | No | `20` | Header padding |
@@ -500,7 +307,7 @@ When `showNativeCropControls: true`, the native crop toolbar is visible.
 - To avoid the footer covering the native toolbar, `showNativeCropControls` works **only with** `controlsPlacement: 'top'`.
 - If you pass `controlsPlacement: 'bottom'`, the library will **auto-force it to `'top'`**.
 
-## Platform-specific props / behavior
+### Platform-specific props / behavior
 
 - **Android only**
   - **`drawUnderStatusBar`**: edge-to-edge header under the status bar.
@@ -525,26 +332,7 @@ These are read from React Native styles and mapped into native values (subset on
 | headerStyle | `{ containerStyle?, titleStyle? }` | No | - | Supports `containerStyle.backgroundColor`, `titleStyle.color/fontSize/fontFamily` |
 | footerStyle | `{ containerStyle?, cancelButtonStyle?, uploadButtonStyle?, cancelTextStyle?, uploadTextStyle? }` | No | - | Supports background/border/textColor/fontSize/fontFamily/borderRadius subset |
 
-### JS-only props (ignored by `openImageCropPicker()`)
-
-These exist in exported types to support the `ImageCropPickerModal` component. They are currently **not used** by the native `openImageCropPicker()` flow (or its alias `open()`).
-
-| Prop | Type | Required | Default | Description |
-| --- | --- | --- | --- | --- |
-| showHeader | boolean | No | - | `ImageCropPickerModal` only |
-| headerAlignment | `'left' \| 'center' \| 'right'` | No | - | `ImageCropPickerModal` only |
-| leftIcon | `React.ReactNode` | No | - | `ImageCropPickerModal` only |
-| rightIcon | `React.ReactNode` | No | - | `ImageCropPickerModal` only |
-| showLeftIcon | boolean | No | - | `ImageCropPickerModal` only |
-| showRightIcon | boolean | No | - | `ImageCropPickerModal` only |
-| showFooter | boolean | No | - | `ImageCropPickerModal` only |
-| cancelIcon | `React.ReactNode` | No | - | `ImageCropPickerModal` only |
-| uploadIcon | `React.ReactNode` | No | - | `ImageCropPickerModal` only |
-| overlayStyle | `CropperOverlayStyle` | No | - | `ImageCropPickerModal` only |
-| backgroundColor | string | No | - | `ImageCropPickerModal` only |
-| safeAreaEnabled | boolean | No | - | `ImageCropPickerModal` only |
-
-## Response Object
+## Response object
 
 | Property | Type | Description |
 | --- | --- | --- |
@@ -575,7 +363,7 @@ The library throws `CropPickerError` with a `code`:
 - Multiple selection options exist in types but **native multiple picking is not implemented yet**.
 - iOS grid/frame color customization is limited (rectangle grid uses the native overlay; circular grid uses a custom overlay).
 
-## Peer Dependencies
+## Peer dependencies
 
 | Package | Version |
 | --- | --- |
@@ -585,6 +373,11 @@ The library throws `CropPickerError` with a `code`:
 ## Contributing
 
 Contributions are welcome. Please open an issue with reproduction details or submit a PR with a clear description + test plan.
+
+## Support
+
+- **Bug reports / feature requests**: open an issue with a minimal repro (device/OS, RN version, and logs).
+- **Questions / help**: start a GitHub discussion or issue (whichever you prefer) with your use-case and desired UI.
 
 ## License
 
